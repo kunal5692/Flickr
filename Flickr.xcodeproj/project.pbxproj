@@ -13,6 +13,7 @@
 		8A06F54222C7721E005581CC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A06F54122C7721E005581CC /* Assets.xcassets */; };
 		8A06F54522C7721E005581CC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A06F54322C7721E005581CC /* LaunchScreen.storyboard */; };
 		8A06F55022C7721E005581CC /* FlickrTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A06F54F22C7721E005581CC /* FlickrTests.swift */; };
+		8A06F56422C775C5005581CC /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A06F56322C775C5005581CC /* Photo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		8A06F54B22C7721E005581CC /* FlickrTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlickrTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A06F54F22C7721E005581CC /* FlickrTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrTests.swift; sourceTree = "<group>"; };
 		8A06F55122C7721E005581CC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8A06F56322C775C5005581CC /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +142,7 @@
 		8A06F56222C7743D005581CC /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				8A06F56322C775C5005581CC /* Photo.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -246,6 +249,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8A06F53D22C7721C005581CC /* ViewController.swift in Sources */,
+				8A06F56422C775C5005581CC /* Photo.swift in Sources */,
 				8A06F53B22C7721C005581CC /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
