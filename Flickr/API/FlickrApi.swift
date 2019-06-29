@@ -33,6 +33,19 @@ class FlickrApi: FlickrApiInterface {
     let defaultSession = URLSession(configuration: .default)
     var dataTask : URLSessionDataTask?
     
+    /**
+     A global shared FlickAPI Instance.
+     */
+    static public let shared: FlickrApi = FlickrApi()
+    
+    /**
+     Fetch Flickr photos list based on a given search term.
+     
+     - parameter searchTerm: A string to match images against.
+     - paramter ppageNo: Current page index
+     - parameter completionHandler: The closure invoked when fetching is completed and the image search results are given.
+     */
+    
     func fetchPhotos(_ searchTerm: String, page pageNo: Int, successHandler: @escaping ([Photo]) -> Void, errorHandler: @escaping ErrorHandler) {
         guard let url = URLBuilder.getPhotosURL(search: searchTerm, page: pageNo) else {
             errorHandler(NSError(domain: ErrorDomain, code: FlickrApiErrCode.URLBuilderFailure.rawValue, userInfo: nil))
@@ -74,7 +87,13 @@ class FlickrApi: FlickrApiInterface {
                 return
             }
             
+            let decoder = JSONDecoder()
+            
             do {
+                 let result = try decoder.decode(SearchResult.self, from: data)
+                 resultsToReturn = result.photos.photo
+                
+                /*
                 if let responseDict = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
                     let photosDict = responseDict["photos"] as! [String:Any]
                     let photo = photosDict["photo"] as! [[String:Any]]
@@ -90,17 +109,19 @@ class FlickrApi: FlickrApiInterface {
                                                      isFamily: item["isfamily"] as! Int))
                     }
                     
+                    
                 }else {
                     debugPrint(LOGGER_TAG,"[API] Decoding failed with error: \(String(describing: error))")
                     reqErr = NSError(domain: ErrorDomain, code: FlickrApiErrCode.FailedToDecodeResponse.rawValue, userInfo: nil)
                     successHandler([])
                 }
+                 */
             }catch {
                 debugPrint(LOGGER_TAG,"[API] Decoding failed with error: \(error)")
                 reqErr = NSError(domain: ErrorDomain, code: FlickrApiErrCode.FailedToDecodeResponse.rawValue, userInfo: nil)
             }
         }
-        
-    }
     
+        dataTask?.resume()
+    }
 }

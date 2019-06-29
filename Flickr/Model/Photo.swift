@@ -8,8 +8,21 @@
 
 import Foundation
 
+struct SearchResult: Codable {
+    let photos: PhotoModel
+    let stat : String
+}
+
+struct PhotoModel : Codable {
+    let page : Int
+    let pages : Int
+    let perpage : Int
+    let total : String
+    let photo : [Photo]
+}
+
 struct Photo : Codable {
-    let id : Int
+    let id : String
     let owner : String
     let secret : String
     let server : String
