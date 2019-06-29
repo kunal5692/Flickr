@@ -77,11 +77,13 @@
 		8A06F53922C7721C005581CC /* Flickr */ = {
 			isa = PBXGroup;
 			children = (
+				8A06F56222C7743D005581CC /* Model */,
+				8A06F55D22C77336005581CC /* View */,
+				8A06F55C22C7731E005581CC /* Resource */,
+				8A06F55B22C7730B005581CC /* Helper */,
+				8A06F55A22C77300005581CC /* API */,
 				8A06F53A22C7721C005581CC /* AppDelegate.swift */,
 				8A06F53C22C7721C005581CC /* ViewController.swift */,
-				8A06F53E22C7721C005581CC /* Main.storyboard */,
-				8A06F54122C7721E005581CC /* Assets.xcassets */,
-				8A06F54322C7721E005581CC /* LaunchScreen.storyboard */,
 				8A06F54622C7721E005581CC /* Info.plist */,
 			);
 			path = Flickr;
@@ -94,6 +96,52 @@
 				8A06F55122C7721E005581CC /* Info.plist */,
 			);
 			path = FlickrTests;
+			sourceTree = "<group>";
+		};
+		8A06F55A22C77300005581CC /* API */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		8A06F55B22C7730B005581CC /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
+		8A06F55C22C7731E005581CC /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				8A06F54122C7721E005581CC /* Assets.xcassets */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		8A06F55D22C77336005581CC /* View */ = {
+			isa = PBXGroup;
+			children = (
+				8A06F55F22C773A7005581CC /* SearchScene */,
+				8A06F53E22C7721C005581CC /* Main.storyboard */,
+				8A06F54322C7721E005581CC /* LaunchScreen.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		8A06F55F22C773A7005581CC /* SearchScene */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = SearchScene;
+			sourceTree = "<group>";
+		};
+		8A06F56222C7743D005581CC /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
