@@ -92,30 +92,6 @@ class FlickrApi: FlickrApiInterface {
             do {
                  let result = try decoder.decode(SearchResult.self, from: data)
                  resultsToReturn = result.photos.photo
-                
-                /*
-                if let responseDict = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
-                    let photosDict = responseDict["photos"] as! [String:Any]
-                    let photo = photosDict["photo"] as! [[String:Any]]
-                    for item in photo  {
-                        resultsToReturn.append(Photo(id: item["id"] as! Int,
-                                                     owner: item["owner"] as! String,
-                                                     secret: item["secret"] as! String,
-                                                     server: item["server"] as! String,
-                                                     farm: item["farm"] as! Int,
-                                                     title: item["title"] as! String,
-                                                     isPublic: item["ispublic"] as! Int,
-                                                     isFriend: item["isfriend"] as! Int,
-                                                     isFamily: item["isfamily"] as! Int))
-                    }
-                    
-                    
-                }else {
-                    debugPrint(LOGGER_TAG,"[API] Decoding failed with error: \(String(describing: error))")
-                    reqErr = NSError(domain: ErrorDomain, code: FlickrApiErrCode.FailedToDecodeResponse.rawValue, userInfo: nil)
-                    successHandler([])
-                }
-                 */
             }catch {
                 debugPrint(LOGGER_TAG,"[API] Decoding failed with error: \(error)")
                 reqErr = NSError(domain: ErrorDomain, code: FlickrApiErrCode.FailedToDecodeResponse.rawValue, userInfo: nil)
