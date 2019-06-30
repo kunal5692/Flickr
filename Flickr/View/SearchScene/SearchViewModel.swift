@@ -75,6 +75,8 @@ class PhotosListViewModel : SearchViewModelInterface {
     func fetchPhotos(searchTerm query: String, page pageNo: Int) {
         self.isFetching = true
         self.photosListProvider.fetchPhotos(query, page: pageNo, successHandler: { [weak self] (photos) in
+            debugPrint("\(LOGGER_TAG) Got response")
+            
             guard let strongSelf = self else {
                 debugPrint("\(LOGGER_TAG) self is nil")
                 return
@@ -84,6 +86,8 @@ class PhotosListViewModel : SearchViewModelInterface {
             for photo in strongSelf.photos {
                 strongSelf.cellViewModels.append(strongSelf.createCellViewModel(photo: photo))
             }
+            
+            strongSelf.delegate?.reloadCollectionView()
             
         }) { [weak self] (error) in
             guard let strongSelf = self else {
@@ -102,7 +106,6 @@ class PhotosListViewModel : SearchViewModelInterface {
     func getCellViewModel(at indexPath: IndexPath) -> PhotosCellViewModel {
         return self.cellViewModels[indexPath.row]
     }
-    
 }
 
 struct PhotosCellViewModel {
