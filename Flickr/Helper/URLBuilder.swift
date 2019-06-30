@@ -61,16 +61,8 @@ class URLBuilder {
         debugPrint("FARM: \(farm)")
         debugPrint("ID: \(id)")
         
-        var components = URLComponents()
-        components.scheme = "http"
-      
         let host = "farm" + farm + "." + Constants.IMAGE_FARM_HOST
-        components.host = host
-        
         let path = "/" + server + "/" + id + "_" + secret
-        //components.path = path
-        
         return URL(string: "http://\(host)\(path).jpg")
-        //return components.url
     }
 }
