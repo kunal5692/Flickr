@@ -16,7 +16,7 @@ protocol ImageSearchResultDataProviderInterface {
     func fetchPhotos(_ searchTerm: String, page pageNo: Int, successHandler: @escaping ([Photo]) -> Void, errorHandler : @escaping ErrorHandler)
 }
 
-class ImageSerachResultDataProvider: ImageSearchResultDataProviderInterface {
+class ImageSearchResultDataProvider: ImageSearchResultDataProviderInterface {
     var flickrAPI: FlickrApiInterface
     
     init(flickrAPI : FlickrApiInterface) {
