@@ -19,6 +19,8 @@
 		8A06F56A22C779CE005581CC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A06F56922C779CE005581CC /* Constants.swift */; };
 		8A06F56C22C78CF5005581CC /* ImageSearchResultDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A06F56B22C78CF5005581CC /* ImageSearchResultDataProvider.swift */; };
 		8A4EDEE722C882F100DB7054 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A4EDEE622C882F100DB7054 /* SearchViewModel.swift */; };
+		8A4EDEE922C8943300DB7054 /* PhotosCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A4EDEE822C8943300DB7054 /* PhotosCell.swift */; };
+		8A4EDEEB22C8CC0700DB7054 /* UIImageView+Addition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A4EDEEA22C8CC0700DB7054 /* UIImageView+Addition.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +50,8 @@
 		8A06F56922C779CE005581CC /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		8A06F56B22C78CF5005581CC /* ImageSearchResultDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSearchResultDataProvider.swift; sourceTree = "<group>"; };
 		8A4EDEE622C882F100DB7054 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		8A4EDEE822C8943300DB7054 /* PhotosCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCell.swift; sourceTree = "<group>"; };
+		8A4EDEEA22C8CC0700DB7054 /* UIImageView+Addition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Addition.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +127,7 @@
 			children = (
 				8A06F56722C77986005581CC /* URLBuilder.swift */,
 				8A06F56922C779CE005581CC /* Constants.swift */,
+				8A4EDEEA22C8CC0700DB7054 /* UIImageView+Addition.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -150,6 +155,7 @@
 			children = (
 				8A06F53C22C7721C005581CC /* SearchViewController.swift */,
 				8A4EDEE622C882F100DB7054 /* SearchViewModel.swift */,
+				8A4EDEE822C8943300DB7054 /* PhotosCell.swift */,
 			);
 			path = SearchScene;
 			sourceTree = "<group>";
@@ -265,12 +271,14 @@
 			files = (
 				8A06F56C22C78CF5005581CC /* ImageSearchResultDataProvider.swift in Sources */,
 				8A06F56822C77986005581CC /* URLBuilder.swift in Sources */,
+				8A4EDEEB22C8CC0700DB7054 /* UIImageView+Addition.swift in Sources */,
 				8A4EDEE722C882F100DB7054 /* SearchViewModel.swift in Sources */,
 				8A06F53D22C7721C005581CC /* SearchViewController.swift in Sources */,
 				8A06F56422C775C5005581CC /* Photo.swift in Sources */,
 				8A06F53B22C7721C005581CC /* AppDelegate.swift in Sources */,
 				8A06F56622C7775C005581CC /* FlickrApi.swift in Sources */,
 				8A06F56A22C779CE005581CC /* Constants.swift in Sources */,
+				8A4EDEE922C8943300DB7054 /* PhotosCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
