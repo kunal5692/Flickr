@@ -85,8 +85,13 @@ class PhotosListViewModel : SearchViewModelInterface {
                 strongSelf.cellViewModels.append(strongSelf.createCellViewModel(photo: photo))
             }
             
-        }) { (error) in
-            
+        }) { [weak self] (error) in
+            guard let strongSelf = self else {
+                debugPrint("\(LOGGER_TAG) : self is nil in error")
+                return
+            }
+            strongSelf.isFetching = false
+            strongSelf.delegate?.errorWhileFetchingPhotos(error: error)
         }
     }
     
