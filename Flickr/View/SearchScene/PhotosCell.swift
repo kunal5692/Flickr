@@ -8,6 +8,8 @@
 
 import UIKit
 
+fileprivate let LOGGER_TAG = "##PhotosCell##"
+
 class PhotosCell: UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
@@ -30,15 +32,13 @@ class PhotosCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        debugPrint("Awake from NIB")
     }
     
     func loadImage() {
-        debugPrint("Load images")
         guard let url = URLBuilder.getImageFarmURL(farm: farm!, id: id!, secret: secret!, server: server!) else {
             return
         }
-        debugPrint("Loading image for url ", url.absoluteString)
+        Logger.debug(LOGGER_TAG, "Loading image for url \(url.absoluteString)")
         self.imageView.downloadAndCacheImage(url: url)
     }
 }

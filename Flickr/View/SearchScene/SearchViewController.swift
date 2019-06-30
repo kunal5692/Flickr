@@ -8,6 +8,8 @@
 
 import UIKit
 
+fileprivate let LOGGER_TAG = "##SearchViewController##"
+
 class SearchViewController: UIViewController {
 
     // View model for view controller
@@ -17,9 +19,6 @@ class SearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        debugPrint("Started application")
-        
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         
@@ -37,6 +36,10 @@ class SearchViewController: UIViewController {
     func setUpSearchBar() {
         self.searchBar.delegate = self
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.searchBar.endEditing(true)
+    }
 }
 
 extension SearchViewController : SearchViewModelDelegate {
@@ -45,7 +48,6 @@ extension SearchViewController : SearchViewModelDelegate {
     }
     
     func reloadCollectionView() {
-        debugPrint("Reload collection view")
         DispatchQueue.main.async {
             self.collectionView.reloadData()
         }
@@ -62,7 +64,7 @@ extension SearchViewController : SearchViewModelDelegate {
 
 extension SearchViewController : UISearchBarDelegate {
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        debugPrint("Search bar end editing")
+        Logger.debug(LOGGER_TAG, "Search bar end editing")
         guard let query = searchBar.text else {
             return
         }
@@ -70,7 +72,6 @@ extension SearchViewController : UISearchBarDelegate {
         if(query.isEmpty) {
             return
         }
-        
         self.search(searchTerm: query)
     }
     
@@ -81,7 +82,7 @@ extension SearchViewController : UISearchBarDelegate {
     */
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        debugPrint("Search button pressed")
+        Logger.debug(LOGGER_TAG, "Search button pressed")
         guard let query = searchBar.text else {
             return
         }
@@ -103,10 +104,14 @@ extension SearchViewController : UISearchBarDelegate {
     }
     */
     
+    func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
+        searchBar.resignFirstResponder()
+        return true
+    }
+    
     func search(searchTerm query : String) {
-        debugPrint("Searching for term ", query)
+        Logger.debug(LOGGER_TAG, "Searching for term \(query)")
         guard let searchVM = self.searchViewModel else {
-            debugPrint("Returing as view model is nil")
             return
         }
         
@@ -156,5 +161,9 @@ extension SearchViewController : UICollectionViewDataSource, UICollectionViewDel
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0.0
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.searchBar.endEditing(true)
     }
 }

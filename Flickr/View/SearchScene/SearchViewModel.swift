@@ -75,10 +75,8 @@ class PhotosListViewModel : SearchViewModelInterface {
     func fetchPhotos(searchTerm query: String, page pageNo: Int) {
         self.isFetching = true
         self.photosListProvider.fetchPhotos(query, page: pageNo, successHandler: { [weak self] (photos) in
-            debugPrint("\(LOGGER_TAG) Got response")
-            
             guard let strongSelf = self else {
-                debugPrint("\(LOGGER_TAG) self is nil")
+                Logger.debug(LOGGER_TAG, "self is nil")
                 return
             }
             strongSelf.photos = photos
@@ -91,7 +89,7 @@ class PhotosListViewModel : SearchViewModelInterface {
             
         }) { [weak self] (error) in
             guard let strongSelf = self else {
-                debugPrint("\(LOGGER_TAG) : self is nil in error")
+                Logger.debug(LOGGER_TAG, "self is nil in error")
                 return
             }
             strongSelf.isFetching = false

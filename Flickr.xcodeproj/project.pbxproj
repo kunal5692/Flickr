@@ -21,6 +21,7 @@
 		8A4EDEE722C882F100DB7054 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A4EDEE622C882F100DB7054 /* SearchViewModel.swift */; };
 		8A4EDEE922C8943300DB7054 /* PhotosCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A4EDEE822C8943300DB7054 /* PhotosCell.swift */; };
 		8A4EDEEB22C8CC0700DB7054 /* UIImageView+Addition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A4EDEEA22C8CC0700DB7054 /* UIImageView+Addition.swift */; };
+		8A4EDEED22C8E20300DB7054 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A4EDEEC22C8E20300DB7054 /* Logger.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +53,7 @@
 		8A4EDEE622C882F100DB7054 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		8A4EDEE822C8943300DB7054 /* PhotosCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCell.swift; sourceTree = "<group>"; };
 		8A4EDEEA22C8CC0700DB7054 /* UIImageView+Addition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Addition.swift"; sourceTree = "<group>"; };
+		8A4EDEEC22C8E20300DB7054 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +130,7 @@
 				8A06F56722C77986005581CC /* URLBuilder.swift */,
 				8A06F56922C779CE005581CC /* Constants.swift */,
 				8A4EDEEA22C8CC0700DB7054 /* UIImageView+Addition.swift */,
+				8A4EDEEC22C8E20300DB7054 /* Logger.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -270,6 +273,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8A06F56C22C78CF5005581CC /* ImageSearchResultDataProvider.swift in Sources */,
+				8A4EDEED22C8E20300DB7054 /* Logger.swift in Sources */,
 				8A06F56822C77986005581CC /* URLBuilder.swift in Sources */,
 				8A4EDEEB22C8CC0700DB7054 /* UIImageView+Addition.swift in Sources */,
 				8A4EDEE722C882F100DB7054 /* SearchViewModel.swift in Sources */,

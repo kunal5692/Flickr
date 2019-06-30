@@ -25,7 +25,6 @@ extension UIImageView {
                 let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
                 let data = data, error == nil,
                 let image = UIImage(data: data) else {
-                    debugPrint("Image to cache is nil")
                     return
             }
             
