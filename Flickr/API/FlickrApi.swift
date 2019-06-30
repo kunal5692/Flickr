@@ -32,6 +32,7 @@ protocol FlickrApiInterface {
 class FlickrApi: FlickrApiInterface {
     let defaultSession = URLSession(configuration: .default)
     var dataTask : URLSessionDataTask?
+    let imageCache = NSCache<NSString, UIImage>()
     
     /**
      A global shared FlickAPI Instance.
@@ -51,6 +52,7 @@ class FlickrApi: FlickrApiInterface {
             errorHandler(NSError(domain: ErrorDomain, code: FlickrApiErrCode.URLBuilderFailure.rawValue, userInfo: nil))
             return
         }
+        debugPrint("\(LOGGER_TAG) Fetching photos")
         
         dataTask = defaultSession.dataTask(with: url) { data, response, error in
             // These will be the results we return with our completion handler
