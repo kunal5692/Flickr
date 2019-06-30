@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 fileprivate let LOGGER_TAG = "##FlickrApi##"
 fileprivate let ErrorDomain = "FlickrApi.error"
@@ -65,6 +66,7 @@ class FlickrApi: FlickrApiInterface {
             defer {
                 self.dataTask = nil
                 if(reqErr == nil) {
+                    debugPrint("\(LOGGER_TAG) Calling successhandler")
                     successHandler(resultsToReturn)
                 }else {
                     errorHandler(reqErr!)
