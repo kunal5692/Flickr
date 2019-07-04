@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 fileprivate let LOGGER_TAG = "##FlickrApi##"
 fileprivate let ErrorDomain = "FlickrApi.error"
@@ -32,6 +33,7 @@ protocol FlickrApiInterface {
 class FlickrApi: FlickrApiInterface {
     let defaultSession = URLSession(configuration: .default)
     var dataTask : URLSessionDataTask?
+    let imageCache = NSCache<NSString, UIImage>()
     
     /**
      A global shared FlickAPI Instance.
@@ -70,19 +72,19 @@ class FlickrApi: FlickrApiInterface {
             }
             
             if let error = error {
-                debugPrint(LOGGER_TAG, "[API] Request failed with error: \(error.localizedDescription)")
+                Logger.debug(LOGGER_TAG, "[API] Request failed with error: \(error.localizedDescription)")
                 reqErr = error as NSError
                 return
             }
             
             guard let data = data, let response = response as? HTTPURLResponse else {
-                debugPrint(LOGGER_TAG,"[API] Request returned an invalid response")
+                Logger.debug(LOGGER_TAG, "[API] Request returned an invalid response")
                 reqErr = NSError(domain: ErrorDomain, code: FlickrApiErrCode.InvalidResponse.rawValue, userInfo: nil)
                 return
             }
             
             guard response.statusCode == 200 else {
-                debugPrint(LOGGER_TAG,"[API] Request returned an unsupported status code: \(response.statusCode)")
+                Logger.debug(LOGGER_TAG, "[API] Request returned an unsupported status code: \(response.statusCode)")
                 reqErr = NSError(domain: ErrorDomain, code: FlickrApiErrCode.UnsupportedStatusCode.rawValue, userInfo: nil)
                 return
             }
@@ -93,7 +95,7 @@ class FlickrApi: FlickrApiInterface {
                  let result = try decoder.decode(SearchResult.self, from: data)
                  resultsToReturn = result.photos.photo
             }catch {
-                debugPrint(LOGGER_TAG,"[API] Decoding failed with error: \(error)")
+                Logger.debug(LOGGER_TAG, "[API] Decoding failed with error: \(error)")
                 reqErr = NSError(domain: ErrorDomain, code: FlickrApiErrCode.FailedToDecodeResponse.rawValue, userInfo: nil)
             }
         }
