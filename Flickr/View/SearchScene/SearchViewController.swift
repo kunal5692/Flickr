@@ -16,7 +16,8 @@ class SearchViewController: UIViewController {
     private var searchViewModel : SearchViewModelInterface?
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
-    private let page : Int = 0
+    private var page : Int = 0
+    private var currentSearchQuery : String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,19 +85,26 @@ extension SearchViewController : UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         Logger.debug(LOGGER_TAG, "Search button pressed")
+        Logger.debug(LOGGER_TAG, "Seraching for \(String(describing: searchBar.text))")
         searchBar.resignFirstResponder()
-        if let vm = self.searchViewModel {
-            vm.removeAllPhotos()
-        }
         
         guard let query = searchBar.text else {
             return
         }
         
-        if(query.isEmpty) {
+        // Return is query is empty or equal to current search query
+        if(query.isEmpty || query == self.currentSearchQuery) {
             return
         }
         
+        if let vm = self.searchViewModel {
+            // Reset page count
+            self.page = 0
+            // Remove all photos
+            vm.removeAllPhotos()
+        }
+        
+        self.currentSearchQuery = query
         self.search(searchTerm: query)
     }
     
