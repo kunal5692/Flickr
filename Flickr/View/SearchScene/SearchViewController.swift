@@ -84,7 +84,7 @@ extension SearchViewController : UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         Logger.debug(LOGGER_TAG, "Search button pressed")
-        
+        searchBar.resignFirstResponder()
         if let vm = self.searchViewModel {
             vm.removeAllPhotos()
         }
