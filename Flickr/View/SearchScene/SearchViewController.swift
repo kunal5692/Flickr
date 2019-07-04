@@ -16,8 +16,10 @@ class SearchViewController: UIViewController {
     private var searchViewModel : SearchViewModelInterface?
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
-    private var page : Int = 0
+    // Default page number of flickr is 1
+    private var page : Int = 1
     private var currentSearchQuery : String = ""
+    private var isCollectionViewFetching = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,8 +56,8 @@ extension SearchViewController : SearchViewModelDelegate {
         }
     }
     
-    func updateFetchingStatus() {
-        
+    func updateFetchingStatus(fetching : Bool) {
+        self.isCollectionViewFetching = fetching
     }
     
     func didSelectContact(photo: Photo) {
@@ -81,7 +83,7 @@ extension SearchViewController : UISearchBarDelegate {
         
         if let vm = self.searchViewModel {
             // Reset page count
-            self.page = 0
+            self.page = 1
             // Remove all photos
             vm.removeAllPhotos()
         }
@@ -151,5 +153,17 @@ extension SearchViewController : UICollectionViewDataSource, UICollectionViewDel
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.searchBar.endEditing(true)
+    }
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        Logger.debug(LOGGER_TAG, "End dragging")
+        let height = self.view.bounds.height
+        let offset = targetContentOffset.pointee.y + height
+        let contentHeight = scrollView.contentSize.height
+        
+        if(contentHeight > height && offset > contentHeight - height && !self.isCollectionViewFetching) {
+            self.page += 1
+            self.search(searchTerm: self.currentSearchQuery)
+        }
     }
 }

@@ -13,7 +13,7 @@ fileprivate let LOGGER_TAG = "##SearchViewModel##"
 protocol SearchViewModelDelegate : class {
     func errorWhileFetchingPhotos(error : NSError)
     func reloadCollectionView()
-    func updateFetchingStatus()
+    func updateFetchingStatus(fetching : Bool)
     func didSelectContact(photo : Photo)
 }
 
@@ -46,7 +46,7 @@ class PhotosListViewModel : SearchViewModelInterface {
     
     var isFetching: Bool = false {
         didSet {
-            self.delegate?.updateFetchingStatus()
+            self.delegate?.updateFetchingStatus(fetching: isFetching)
         }
     }
     
@@ -74,19 +74,23 @@ class PhotosListViewModel : SearchViewModelInterface {
         return photos.count
     }
     
+    func processQuery(query : String) -> String {
+        return query.replacingOccurrences(of: " ", with: "+")
+    }
+    
     func fetchPhotos(searchTerm query: String, page pageNo: Int) {
+        let processedQuery = self.processQuery(query: query)
         self.isFetching = true
-        self.photosListProvider.fetchPhotos(query, page: pageNo, successHandler: { [weak self] (photos) in
+        self.photosListProvider.fetchPhotos(processedQuery, page: pageNo, successHandler: { [weak self] (photos) in
             guard let strongSelf = self else {
                 Logger.debug(LOGGER_TAG, "self is nil")
                 return
             }
-            strongSelf.photos = photos
-            
+            strongSelf.photos.append(contentsOf: photos)
             for photo in strongSelf.photos {
                 strongSelf.cellViewModels.append(strongSelf.createCellViewModel(photo: photo))
             }
-            
+            strongSelf.isFetching = false
             strongSelf.delegate?.reloadCollectionView()
             
         }) { [weak self] (error) in
