@@ -33,6 +33,8 @@ protocol SearchViewModelInterface {
     
     func getCellViewModel(at indexPath : IndexPath) -> PhotosCellViewModel
     
+    func removeAllPhotos()
+    
     var delegate : SearchViewModelDelegate? {get set}
 }
 
@@ -103,6 +105,12 @@ class PhotosListViewModel : SearchViewModelInterface {
     
     func getCellViewModel(at indexPath: IndexPath) -> PhotosCellViewModel {
         return self.cellViewModels[indexPath.row]
+    }
+    
+    func removeAllPhotos() {
+        if self.photos.count > 0 {
+            self.photos.removeAll()
+        }
     }
 }
 

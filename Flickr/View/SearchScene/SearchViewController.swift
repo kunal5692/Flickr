@@ -16,6 +16,7 @@ class SearchViewController: UIViewController {
     private var searchViewModel : SearchViewModelInterface?
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
+    private let page : Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,6 +84,11 @@ extension SearchViewController : UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         Logger.debug(LOGGER_TAG, "Search button pressed")
+        
+        if let vm = self.searchViewModel {
+            vm.removeAllPhotos()
+        }
+        
         guard let query = searchBar.text else {
             return
         }
@@ -115,7 +121,7 @@ extension SearchViewController : UISearchBarDelegate {
             return
         }
         
-        searchVM.fetchPhotos(searchTerm: query, page: 0)
+        searchVM.fetchPhotos(searchTerm: query, page: self.page)
     }
     
 }
