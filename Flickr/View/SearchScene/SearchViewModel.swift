@@ -111,6 +111,12 @@ class PhotosListViewModel : SearchViewModelInterface {
         if self.photos.count > 0 {
             self.photos.removeAll()
         }
+        
+        if self.cellViewModels.count > 0 {
+            self.cellViewModels.removeAll()
+        }
+        
+        self.delegate?.reloadCollectionView()
     }
 }
 
