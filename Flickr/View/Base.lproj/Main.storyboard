@@ -19,14 +19,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="s79-rS-FI6">
-                                <rect key="frame" x="0.0" y="34" width="414" height="54"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="54"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="54" id="9I2-98-XJL"/>
                                 </constraints>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="PUv-EM-JSs">
-                                <rect key="frame" x="0.0" y="93" width="414" height="769"/>
+                                <rect key="frame" x="0.0" y="103" width="414" height="759"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="dur-3h-QyA">
                                     <size key="itemSize" width="188" height="159"/>
@@ -77,9 +77,9 @@
                         <constraints>
                             <constraint firstItem="s79-rS-FI6" firstAttribute="leading" secondItem="qvH-la-hyr" secondAttribute="leading" id="1Gu-5C-kp2"/>
                             <constraint firstItem="qvH-la-hyr" firstAttribute="bottom" secondItem="PUv-EM-JSs" secondAttribute="bottom" id="Baw-vX-IMB"/>
-                            <constraint firstItem="qvH-la-hyr" firstAttribute="top" secondItem="s79-rS-FI6" secondAttribute="bottom" constant="-44" id="OE3-uU-hNV"/>
                             <constraint firstItem="PUv-EM-JSs" firstAttribute="leading" secondItem="qvH-la-hyr" secondAttribute="leading" id="XKN-HL-51p"/>
                             <constraint firstItem="qvH-la-hyr" firstAttribute="trailing" secondItem="PUv-EM-JSs" secondAttribute="trailing" id="gbe-Mq-tws"/>
+                            <constraint firstItem="s79-rS-FI6" firstAttribute="top" secondItem="Mpb-ha-Nsb" secondAttribute="topMargin" id="lDm-no-Rbw"/>
                             <constraint firstItem="qvH-la-hyr" firstAttribute="trailing" secondItem="s79-rS-FI6" secondAttribute="trailing" id="o0t-Bi-P2y"/>
                             <constraint firstItem="PUv-EM-JSs" firstAttribute="top" secondItem="s79-rS-FI6" secondAttribute="bottom" constant="5" id="p7W-yQ-Byw"/>
                         </constraints>
