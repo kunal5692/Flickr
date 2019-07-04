@@ -11,11 +11,14 @@ import UIKit
 let imageCache = NSCache<AnyObject, AnyObject>()
 
 extension UIImageView {
-    func downloadAndCacheImage(url : URL) {
+    func downloadAndCacheImage(url : URL, completion completionHandler: @escaping () -> Void, failure failureHandler: @escaping () -> Void) {
         image = nil
         
         if let imageFromCache = imageCache.object(forKey: url.absoluteString as AnyObject) as? UIImage {
-            self.image = imageFromCache
+            DispatchQueue.main.async {
+                self.image = imageFromCache
+                completionHandler()
+            }
             return
         }
         
@@ -25,12 +28,17 @@ extension UIImageView {
                 let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
                 let data = data, error == nil,
                 let image = UIImage(data: data) else {
+                    DispatchQueue.main.async {
+                        failureHandler()
+                    }
+                    
                     return
             }
             
             DispatchQueue.main.async {
                 imageCache.setObject(image, forKey: url.absoluteString as AnyObject)
                 self.image = image
+                completionHandler()
             }
             }.resume()
     }
