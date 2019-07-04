@@ -32,7 +32,6 @@ class SearchViewController: UIViewController {
         let dataProvider = ImageSearchResultDataProvider.init(flickrAPI: FlickrApi.shared)
         searchViewModel = PhotosListViewModel(dataProvider: dataProvider)
         searchViewModel?.delegate = self
-        //searchViewModel?.fetchPhotos(searchTerm: "", page: "")
     }
     
     func setUpSearchBar() {
@@ -65,23 +64,6 @@ extension SearchViewController : SearchViewModelDelegate {
 }
 
 extension SearchViewController : UISearchBarDelegate {
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        Logger.debug(LOGGER_TAG, "Search bar end editing")
-        guard let query = searchBar.text else {
-            return
-        }
-        
-        if(query.isEmpty) {
-            return
-        }
-        self.search(searchTerm: query)
-    }
-    
-    /*
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        
-    }
-    */
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         Logger.debug(LOGGER_TAG, "Search button pressed")
@@ -107,16 +89,6 @@ extension SearchViewController : UISearchBarDelegate {
         self.currentSearchQuery = query
         self.search(searchTerm: query)
     }
-    
-    /*
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        
-    }
-
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
-    }
-    */
     
     func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
         searchBar.resignFirstResponder()
