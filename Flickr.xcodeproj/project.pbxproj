@@ -24,6 +24,7 @@
 		8A4EDEED22C8E20300DB7054 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A4EDEEC22C8E20300DB7054 /* Logger.swift */; };
 		8A63493922CE38E900D61BAC /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A63493822CE38E900D61BAC /* DetailViewController.swift */; };
 		8A63493B22CE391400D61BAC /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A63493A22CE391400D61BAC /* DetailViewModel.swift */; };
+		8A63493D22CF2C7B00D61BAC /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A63493C22CF2C7B00D61BAC /* Router.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,7 @@
 		8A4EDEEC22C8E20300DB7054 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		8A63493822CE38E900D61BAC /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		8A63493A22CE391400D61BAC /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
+		8A63493C22CF2C7B00D61BAC /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +137,7 @@
 				8A06F56922C779CE005581CC /* Constants.swift */,
 				8A4EDEEA22C8CC0700DB7054 /* UIImageView+Addition.swift */,
 				8A4EDEEC22C8E20300DB7054 /* Logger.swift */,
+				8A63493C22CF2C7B00D61BAC /* Router.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -296,6 +299,7 @@
 				8A06F56422C775C5005581CC /* Photo.swift in Sources */,
 				8A06F53B22C7721C005581CC /* AppDelegate.swift in Sources */,
 				8A63493B22CE391400D61BAC /* DetailViewModel.swift in Sources */,
+				8A63493D22CF2C7B00D61BAC /* Router.swift in Sources */,
 				8A06F56622C7775C005581CC /* FlickrApi.swift in Sources */,
 				8A06F56A22C779CE005581CC /* Constants.swift in Sources */,
 				8A4EDEE922C8943300DB7054 /* PhotosCell.swift in Sources */,

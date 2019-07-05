@@ -131,6 +131,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="bCe-cp-4T1" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Zcv-Hf-dvo">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>

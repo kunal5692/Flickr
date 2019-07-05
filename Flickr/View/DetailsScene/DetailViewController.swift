@@ -16,7 +16,6 @@ class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-     
         guard let photoModel = self.photo else {
             return
         }
@@ -32,4 +31,8 @@ class DetailViewController: UIViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.isHidden = false
+    }
 }

@@ -89,7 +89,7 @@ class PhotosListViewModel : SearchViewModelInterface {
                 return
             }
             strongSelf.photos.append(contentsOf: photos)
-            for photo in strongSelf.photos {
+            for photo in photos {
                 strongSelf.cellViewModels.append(strongSelf.createCellViewModel(photo: photo))
             }
             strongSelf.isFetching = false

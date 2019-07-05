@@ -10,7 +10,7 @@ import UIKit
 
 fileprivate let LOGGER_TAG = "##SearchViewController##"
 
-class SearchViewController: UIViewController {
+class SearchViewController: UIViewController, DetailImageViewRoute, ErrorAlertViewRoute {
 
     // View model for view controller
     private var searchViewModel : SearchViewModelInterface?
@@ -30,6 +30,11 @@ class SearchViewController: UIViewController {
         self.setUpSearchBar()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.isHidden = true
+    }
+    
     private func setUpViewModel() {
         let dataProvider = ImageSearchResultDataProvider.init(flickrAPI: FlickrApi.shared)
         searchViewModel = PhotosListViewModel(dataProvider: dataProvider)
@@ -47,7 +52,7 @@ class SearchViewController: UIViewController {
 
 extension SearchViewController : SearchViewModelDelegate {
     func errorWhileFetchingPhotos(error: NSError) {
-        
+        openAlertView(message: error.debugDescription, title: "Error")
     }
     
     func reloadCollectionView() {
@@ -61,9 +66,7 @@ extension SearchViewController : SearchViewModelDelegate {
     }
     
     func didSelectContact(photo: Photo) {
-        let detailVC = storyboard?.instantiateViewController(withIdentifier: "detail_vc") as! DetailViewController
-        detailVC.photo = photo
-        self.navigationController?.pushViewController(detailVC, animated: true)
+        openDetailImageView(for: photo)
     }
 }
 
@@ -109,7 +112,6 @@ extension SearchViewController : UISearchBarDelegate {
     }
     
 }
-
 
 extension SearchViewController : UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
