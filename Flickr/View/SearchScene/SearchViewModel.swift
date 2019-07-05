@@ -35,6 +35,8 @@ protocol SearchViewModelInterface {
     
     func removeAllPhotos()
     
+    func didSelectItemAtIndex(at index : Int)
+    
     var delegate : SearchViewModelDelegate? {get set}
 }
 
@@ -121,6 +123,12 @@ class PhotosListViewModel : SearchViewModelInterface {
         }
         
         self.delegate?.reloadCollectionView()
+    }
+    
+    func didSelectItemAtIndex(at index: Int) {
+        if (self.photos.count != 0 && self.photos.count > index) {
+            self.delegate?.didSelectContact(photo: self.photos[index])
+        }
     }
 }
 

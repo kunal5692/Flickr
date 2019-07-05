@@ -61,7 +61,9 @@ extension SearchViewController : SearchViewModelDelegate {
     }
     
     func didSelectContact(photo: Photo) {
-        
+        let detailVC = storyboard?.instantiateViewController(withIdentifier: "detail_vc") as! DetailViewController
+        detailVC.photo = photo
+        self.navigationController?.pushViewController(detailVC, animated: true)
     }
 }
 
@@ -151,6 +153,11 @@ extension SearchViewController : UICollectionViewDataSource, UICollectionViewDel
         return 0.0
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let vm = self.searchViewModel {
+            vm.didSelectItemAtIndex(at : indexPath.row)
+        }
+    }
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.searchBar.endEditing(true)
     }
