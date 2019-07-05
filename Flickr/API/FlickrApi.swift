@@ -33,7 +33,6 @@ protocol FlickrApiInterface {
 class FlickrApi: FlickrApiInterface {
     let defaultSession = URLSession(configuration: .default)
     var dataTask : URLSessionDataTask?
-    let imageCache = NSCache<NSString, UIImage>()
     
     /**
      A global shared FlickAPI Instance.
