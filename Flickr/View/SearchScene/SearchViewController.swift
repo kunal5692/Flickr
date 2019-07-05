@@ -10,7 +10,7 @@ import UIKit
 
 fileprivate let LOGGER_TAG = "##SearchViewController##"
 
-class SearchViewController: UIViewController {
+class SearchViewController: UIViewController, DetailImageViewRoute, ErrorAlertViewRoute {
 
     // View model for view controller
     private var searchViewModel : SearchViewModelInterface?
@@ -30,6 +30,11 @@ class SearchViewController: UIViewController {
         self.setUpSearchBar()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.isHidden = true
+    }
+    
     private func setUpViewModel() {
         let dataProvider = ImageSearchResultDataProvider.init(flickrAPI: FlickrApi.shared)
         searchViewModel = PhotosListViewModel(dataProvider: dataProvider)
@@ -47,7 +52,7 @@ class SearchViewController: UIViewController {
 
 extension SearchViewController : SearchViewModelDelegate {
     func errorWhileFetchingPhotos(error: NSError) {
-        
+        openAlertView(message: error.debugDescription, title: "Error")
     }
     
     func reloadCollectionView() {
@@ -61,7 +66,7 @@ extension SearchViewController : SearchViewModelDelegate {
     }
     
     func didSelectContact(photo: Photo) {
-        
+        openDetailImageView(for: photo)
     }
 }
 
@@ -108,7 +113,6 @@ extension SearchViewController : UISearchBarDelegate {
     
 }
 
-
 extension SearchViewController : UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -151,6 +155,11 @@ extension SearchViewController : UICollectionViewDataSource, UICollectionViewDel
         return 0.0
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let vm = self.searchViewModel {
+            vm.didSelectItemAtIndex(at : indexPath.row)
+        }
+    }
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.searchBar.endEditing(true)
     }

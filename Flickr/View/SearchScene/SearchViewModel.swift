@@ -35,6 +35,8 @@ protocol SearchViewModelInterface {
     
     func removeAllPhotos()
     
+    func didSelectItemAtIndex(at index : Int)
+    
     var delegate : SearchViewModelDelegate? {get set}
 }
 
@@ -87,7 +89,7 @@ class PhotosListViewModel : SearchViewModelInterface {
                 return
             }
             strongSelf.photos.append(contentsOf: photos)
-            for photo in strongSelf.photos {
+            for photo in photos {
                 strongSelf.cellViewModels.append(strongSelf.createCellViewModel(photo: photo))
             }
             strongSelf.isFetching = false
@@ -121,6 +123,12 @@ class PhotosListViewModel : SearchViewModelInterface {
         }
         
         self.delegate?.reloadCollectionView()
+    }
+    
+    func didSelectItemAtIndex(at index: Int) {
+        if (self.photos.count != 0 && self.photos.count > index) {
+            self.delegate?.didSelectContact(photo: self.photos[index])
+        }
     }
 }
 

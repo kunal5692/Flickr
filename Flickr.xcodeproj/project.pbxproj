@@ -22,6 +22,9 @@
 		8A4EDEE922C8943300DB7054 /* PhotosCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A4EDEE822C8943300DB7054 /* PhotosCell.swift */; };
 		8A4EDEEB22C8CC0700DB7054 /* UIImageView+Addition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A4EDEEA22C8CC0700DB7054 /* UIImageView+Addition.swift */; };
 		8A4EDEED22C8E20300DB7054 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A4EDEEC22C8E20300DB7054 /* Logger.swift */; };
+		8A63493922CE38E900D61BAC /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A63493822CE38E900D61BAC /* DetailViewController.swift */; };
+		8A63493B22CE391400D61BAC /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A63493A22CE391400D61BAC /* DetailViewModel.swift */; };
+		8A63493D22CF2C7B00D61BAC /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A63493C22CF2C7B00D61BAC /* Router.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +57,9 @@
 		8A4EDEE822C8943300DB7054 /* PhotosCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCell.swift; sourceTree = "<group>"; };
 		8A4EDEEA22C8CC0700DB7054 /* UIImageView+Addition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Addition.swift"; sourceTree = "<group>"; };
 		8A4EDEEC22C8E20300DB7054 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		8A63493822CE38E900D61BAC /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		8A63493A22CE391400D61BAC /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
+		8A63493C22CF2C7B00D61BAC /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +137,7 @@
 				8A06F56922C779CE005581CC /* Constants.swift */,
 				8A4EDEEA22C8CC0700DB7054 /* UIImageView+Addition.swift */,
 				8A4EDEEC22C8E20300DB7054 /* Logger.swift */,
+				8A63493C22CF2C7B00D61BAC /* Router.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -146,6 +153,7 @@
 		8A06F55D22C77336005581CC /* View */ = {
 			isa = PBXGroup;
 			children = (
+				8A63493722CE388600D61BAC /* DetailsScene */,
 				8A06F55F22C773A7005581CC /* SearchScene */,
 				8A06F53E22C7721C005581CC /* Main.storyboard */,
 				8A06F54322C7721E005581CC /* LaunchScreen.storyboard */,
@@ -169,6 +177,15 @@
 				8A06F56322C775C5005581CC /* Photo.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		8A63493722CE388600D61BAC /* DetailsScene */ = {
+			isa = PBXGroup;
+			children = (
+				8A63493822CE38E900D61BAC /* DetailViewController.swift */,
+				8A63493A22CE391400D61BAC /* DetailViewModel.swift */,
+			);
+			path = DetailsScene;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -275,11 +292,14 @@
 				8A06F56C22C78CF5005581CC /* ImageSearchResultDataProvider.swift in Sources */,
 				8A4EDEED22C8E20300DB7054 /* Logger.swift in Sources */,
 				8A06F56822C77986005581CC /* URLBuilder.swift in Sources */,
+				8A63493922CE38E900D61BAC /* DetailViewController.swift in Sources */,
 				8A4EDEEB22C8CC0700DB7054 /* UIImageView+Addition.swift in Sources */,
 				8A4EDEE722C882F100DB7054 /* SearchViewModel.swift in Sources */,
 				8A06F53D22C7721C005581CC /* SearchViewController.swift in Sources */,
 				8A06F56422C775C5005581CC /* Photo.swift in Sources */,
 				8A06F53B22C7721C005581CC /* AppDelegate.swift in Sources */,
+				8A63493B22CE391400D61BAC /* DetailViewModel.swift in Sources */,
+				8A63493D22CF2C7B00D61BAC /* Router.swift in Sources */,
 				8A06F56622C7775C005581CC /* FlickrApi.swift in Sources */,
 				8A06F56A22C779CE005581CC /* Constants.swift in Sources */,
 				8A4EDEE922C8943300DB7054 /* PhotosCell.swift in Sources */,
