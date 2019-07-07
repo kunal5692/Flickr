@@ -10,15 +10,17 @@ import UIKit
 
 fileprivate let LOGGER_TAG = "##PhotosCell##"
 
-class PhotosCell: UICollectionViewCell {
+class PhotosCell: UICollectionViewCell, ImageDownloadedDelegate {
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var containerView: UIView!
     
-    private var secret : String?
-    private var farm : String?
-    private var id : String?
-    private var server : String?
+  //  private var secret : String?
+  //  private var farm : String?
+  //  private var id : String?
+  //  private var server : String?
+   
+    var indexPath: IndexPath?
     
     private lazy var spinner : UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView(style: .gray)
@@ -39,12 +41,17 @@ class PhotosCell: UICollectionViewCell {
     
     var photoCellViewModel : PhotosCellViewModel? {
         didSet{
-            secret = photoCellViewModel?.secret
-            farm = photoCellViewModel?.farm
-            id = photoCellViewModel?.id
-            server = photoCellViewModel?.server
+            photoCellViewModel?.setImageDownloadTask(position: indexPath?.row ?? 0 , delegate: self)
+            
+            // Reset image for reused cell
+            self.imageView.image = nil
+            
+    //        secret = photoCellViewModel?.secret
+    //        farm = photoCellViewModel?.farm
+    //        id = photoCellViewModel?.id
+    //        server = photoCellViewModel?.server
             self.spinner.startAnimating()
-            self.loadImage()
+            //self.loadImage()
         }
     }
     
@@ -127,5 +134,15 @@ class PhotosCell: UICollectionViewCell {
             strongSelf.retry.isHidden = false
             strongSelf.spinner.stopAnimating()
         })
+    */
+        
+    }
+    
+    func downloadCompleted(position: Int) {
+        Logger.debug(LOGGER_TAG, "Downloaded image at \(position)")
+        if(indexPath?.row == position) {
+            self.spinner.stopAnimating()
+            self.imageView.image = self.photoCellViewModel?.imageTask?.image
+        }
     }
 }

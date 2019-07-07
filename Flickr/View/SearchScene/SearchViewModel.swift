@@ -32,7 +32,7 @@ protocol SearchViewModelInterface {
     
     func fetchPhotos(searchTerm query: String, page pageNo: Int)
     
-    func getCellViewModel(at indexPath : IndexPath) -> PhotosCellViewModel
+    func getCellViewModel(at indexPath : IndexPath) -> PhotosCellViewModel?
     
     func removeAllPhotos()
     
@@ -46,6 +46,8 @@ class PhotosListViewModel : SearchViewModelInterface {
     private var photos : [Photo] = [Photo]()
     private let photosListProvider :ImageSearchResultDataProviderInterface
     private var cellViewModels : [PhotosCellViewModel] = [PhotosCellViewModel]()
+    
+    private var imageTasks = [Int : ImageDownloadTask]()
     
     var isFetching: Bool = false {
         didSet {
@@ -127,8 +129,11 @@ class PhotosListViewModel : SearchViewModelInterface {
         return PhotosCellViewModel(id: photo.id, farm: String(photo.farm), secret: photo.secret, server: photo.server)
     }
     
-    func getCellViewModel(at indexPath: IndexPath) -> PhotosCellViewModel {
-        return self.cellViewModels[indexPath.row]
+    func getCellViewModel(at indexPath: IndexPath) -> PhotosCellViewModel? {
+        if(self.cellViewModels.count > indexPath.row) {
+            return self.cellViewModels[indexPath.row]
+        }
+        return nil
     }
     
     func removeAllPhotos() {
@@ -150,9 +155,26 @@ class PhotosListViewModel : SearchViewModelInterface {
     }
 }
 
-struct PhotosCellViewModel {
+class PhotosCellViewModel {
     let id: String
     let farm: String
     let secret: String
     let server: String
+    var imageTask: ImageDownloadTask?
+    
+    init(id: String, farm: String, secret: String, server: String) {
+        self.id = id
+        self.farm = farm
+        self.secret = secret
+        self.server = server
+    }
+    
+    func setImageDownloadTask(position: Int, delegate: ImageDownloadedDelegate) {
+        guard let url = URLBuilder.getImageFarmURL(farm: self.farm, id: self.id, secret: self.secret, server: self.server) else {
+            return
+        }
+        
+        let session = URLSession(configuration: .default)
+        self.imageTask = ImageDownloadTask(position: position, url: url, session: session, delegate: delegate)
+    }
 }

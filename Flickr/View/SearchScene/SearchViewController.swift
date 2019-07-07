@@ -133,6 +133,32 @@ extension SearchViewController : UICollectionViewDataSource, UICollectionViewDel
         return vm.getPhotosCount()
     }
     
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        guard let searchVM = self.searchViewModel else {
+            return
+        }
+        
+        guard let cellVM = searchVM.getCellViewModel(at: indexPath) else {
+            return
+        }
+        
+        //let cellVM = searchVM.getCellViewModel(at: indexPath)
+        cellVM.imageTask?.resume()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        guard let searchVM = self.searchViewModel else {
+            return
+        }
+        
+        guard let cellVM = searchVM.getCellViewModel(at: indexPath) else {
+            return
+        }
+        
+        //let cellVM = searchVM.getCellViewModel(at: indexPath)
+        cellVM.imageTask?.resume()
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.PHOTO_CELL_IDENTIFIER, for: indexPath) as? PhotosCell else {
             fatalError("Cell does not exist")
@@ -143,6 +169,7 @@ extension SearchViewController : UICollectionViewDataSource, UICollectionViewDel
         }
         
         let cellVM = searchVM.getCellViewModel(at: indexPath)
+        cell.indexPath = indexPath
         cell.photoCellViewModel = cellVM
         return cell
     }
