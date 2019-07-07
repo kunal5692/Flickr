@@ -15,6 +15,7 @@ protocol SearchViewModelDelegate : class {
     func reloadCollectionView()
     func updateFetchingStatus(fetching : Bool)
     func didSelectContact(photo : Photo)
+    func reloadItemAtIndexPaths(indexPaths: [IndexPath])
 }
 
 protocol SearchViewModelInterface {
@@ -80,6 +81,23 @@ class PhotosListViewModel : SearchViewModelInterface {
         return query.replacingOccurrences(of: " ", with: "+")
     }
     
+    func processPhotos(photos: [Photo]) {
+        let previousCount = self.photos.count
+        var indexPaths = [IndexPath]()
+        var index = 0
+        
+        self.photos.append(contentsOf: photos)
+        for photo in photos {
+            self.cellViewModels.append(self.createCellViewModel(photo: photo))
+            indexPaths.append(IndexPath(row: previousCount + index, section: 0))
+            index += 1
+        }
+        
+        self.isFetching = false
+        self.delegate?.reloadItemAtIndexPaths(indexPaths: indexPaths)
+        //self.delegate?.reloadCollectionView()
+    }
+    
     func fetchPhotos(searchTerm query: String, page pageNo: Int) {
         let processedQuery = self.processQuery(query: query)
         self.isFetching = true
@@ -88,12 +106,12 @@ class PhotosListViewModel : SearchViewModelInterface {
                 Logger.debug(LOGGER_TAG, "self is nil")
                 return
             }
-            strongSelf.photos.append(contentsOf: photos)
-            for photo in photos {
-                strongSelf.cellViewModels.append(strongSelf.createCellViewModel(photo: photo))
+            
+            if(photos.count == 0) {
+                return
             }
-            strongSelf.isFetching = false
-            strongSelf.delegate?.reloadCollectionView()
+            
+            strongSelf.processPhotos(photos: photos)
             
         }) { [weak self] (error) in
             guard let strongSelf = self else {

@@ -68,6 +68,12 @@ extension SearchViewController : SearchViewModelDelegate {
     func didSelectContact(photo: Photo) {
         openDetailImageView(for: photo)
     }
+    
+    func reloadItemAtIndexPaths(indexPaths: [IndexPath]) {
+        DispatchQueue.main.async {
+            self.collectionView.insertItems(at: indexPaths)
+        }
+    }
 }
 
 extension SearchViewController : UISearchBarDelegate {
