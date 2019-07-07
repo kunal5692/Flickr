@@ -20,7 +20,7 @@ class DetailViewController: UIViewController {
             return
         }
         
-        guard let url = URLBuilder.getImageFarmURL(farm: String(photoModel.farm), id: photoModel.id, secret: photoModel.secret, server: photoModel.server) else {
+        guard let url = URLBuilder.getImageFarmURL(farm: String(photoModel.farm), id: photoModel.id, secret: photoModel.secret, server: photoModel.server, size: "b") else {
             return
         }
         
