@@ -68,7 +68,7 @@ class ImageDownloadTask {
     
     private func downloadTaskCompletionHandler(url: URL?, response: URLResponse?, error: Error?) {
         if let error = error {
-            print("Error downloading: ", error)
+            Logger.debug("TASK", "Error downloading: \(error)")
             self.isDownloading = false
             self.delegate.downloadingFailed(position: self.position, error: error)
             return
