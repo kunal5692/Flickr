@@ -52,7 +52,11 @@ class SearchViewController: UIViewController, DetailImageViewRoute, ErrorAlertVi
 
 extension SearchViewController : SearchViewModelDelegate {
     func errorWhileFetchingPhotos(error: NSError) {
-        openAlertView(message: error.debugDescription, title: "Error")
+        if(error.code == -1009) {
+            openAlertView(message: "Please connect to internet", title: "No connection")
+        }else {
+            openAlertView(message: error.debugDescription, title: "Error")
+        }
     }
     
     func reloadCollectionView() {
@@ -141,8 +145,6 @@ extension SearchViewController : UICollectionViewDataSource, UICollectionViewDel
         guard let cellVM = searchVM.getCellViewModel(at: indexPath) else {
             return
         }
-        
-        //let cellVM = searchVM.getCellViewModel(at: indexPath)
         cellVM.imageTask?.resume()
     }
     
@@ -154,9 +156,7 @@ extension SearchViewController : UICollectionViewDataSource, UICollectionViewDel
         guard let cellVM = searchVM.getCellViewModel(at: indexPath) else {
             return
         }
-        
-        //let cellVM = searchVM.getCellViewModel(at: indexPath)
-        cellVM.imageTask?.resume()
+        cellVM.imageTask?.pause()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

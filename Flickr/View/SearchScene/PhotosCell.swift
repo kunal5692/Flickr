@@ -45,11 +45,6 @@ class PhotosCell: UICollectionViewCell, ImageDownloadedDelegate {
             
             // Reset image for reused cell
             self.imageView.image = nil
-            
-    //        secret = photoCellViewModel?.secret
-    //        farm = photoCellViewModel?.farm
-    //        id = photoCellViewModel?.id
-    //        server = photoCellViewModel?.server
             self.spinner.startAnimating()
             //self.loadImage()
         }

@@ -8,9 +8,17 @@
 
 import UIKit
 
-class DetailViewController: UIViewController {
+class DetailViewController: UIViewController, ErrorAlertViewRoute {
 
     @IBOutlet weak var imageView: UIImageView!
+   
+    private lazy var loader : UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .gray)
+        indicator.hidesWhenStopped = true
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        return indicator
+    }()
+
     
     var photo: Photo?
     
@@ -19,15 +27,39 @@ class DetailViewController: UIViewController {
         guard let photoModel = self.photo else {
             return
         }
+        self.view.addSubview(self.loader)
+        
+        // Spinner constraints
+        let spinnerHorizontalConstraint = NSLayoutConstraint(item: self.loader,
+                                                             attribute: .centerX,
+                                                             relatedBy: .equal,
+                                                             toItem: self.view,
+                                                             attribute: .centerX,
+                                                             multiplier: 1,
+                                                             constant: 0)
+        
+        let spinnerVerticalConstraint = NSLayoutConstraint(item: self.loader,
+                                                           attribute: .centerY,
+                                                           relatedBy: .equal,
+                                                           toItem: self.view,
+                                                           attribute: .centerY,
+                                                           multiplier: 1.0,
+                                                           constant: 0)
+        
+        NSLayoutConstraint.activate([spinnerVerticalConstraint, spinnerHorizontalConstraint])
+        
+        self.loader.startAnimating()
+        
         
         guard let url = URLBuilder.getImageFarmURL(farm: String(photoModel.farm), id: photoModel.id, secret: photoModel.secret, server: photoModel.server, size: "b") else {
             return
         }
         
-        imageView.downloadAndCacheImage(url: url, completion: {
-            //TODO
-        }) {
-            //TODO
+        imageView.downloadAndCacheImage(url: url, completion: { [weak self] in
+            self?.loader.stopAnimating()
+        }) { [weak self] in
+            self?.loader.stopAnimating()
+            self?.openAlertView(message: "Failed to load image. Please check connection", title: "Loading Failed")
         }
     }
     

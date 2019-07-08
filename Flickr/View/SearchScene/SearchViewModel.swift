@@ -141,6 +141,11 @@ class PhotosListViewModel : SearchViewModelInterface {
             self.photos.removeAll()
         }
         
+        for cellViewModel in self.cellViewModels {
+            cellViewModel.imageTask?.pause()
+            cellViewModel.imageTask = nil
+        }
+        
         if self.cellViewModels.count > 0 {
             self.cellViewModels.removeAll()
         }
