@@ -14,12 +14,6 @@ class PhotosCell: UICollectionViewCell, ImageDownloadedDelegate {
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var containerView: UIView!
-    
-  //  private var secret : String?
-  //  private var farm : String?
-  //  private var id : String?
-  //  private var server : String?
-   
     var indexPath: IndexPath?
     
     private lazy var spinner : UIActivityIndicatorView = {
