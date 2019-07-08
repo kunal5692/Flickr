@@ -41,14 +41,14 @@ class PhotosCell: UICollectionViewCell, ImageDownloadedDelegate {
     
     var photoCellViewModel : PhotosCellViewModel? {
         didSet{
+            // Set image task
             photoCellViewModel?.setImageDownloadTask(position: indexPath?.row ?? 0 , delegate: self)
-            
             // Reset image for reused cell
             self.imageView.image = nil
-            
+            // Hide retry button
             self.retry.isHidden = true
+            // Start animating spinner
             self.spinner.startAnimating()
-            //self.loadImage()
         }
     }
     
@@ -106,35 +106,6 @@ class PhotosCell: UICollectionViewCell, ImageDownloadedDelegate {
         
         NSLayoutConstraint.activate([retryHorizontalConstraint, retryVerticalConstraint])
 
-    }
-    
-    func loadImage() {
-        self.retry.isHidden = true
-        
-        guard let url = URLBuilder.getImageFarmURL(farm: farm!, id: id!, secret: secret!, server: server!) else {
-            return
-        }
-        
-        Logger.debug(LOGGER_TAG, "Loading image for url \(url.absoluteString)")
-        self.imageView.downloadAndCacheImage(url: url, completion: { [weak self] in
-            Logger.debug(LOGGER_TAG, "Downloaded image")
-            guard let strongSelf = self else {
-                return
-            }
-            strongSelf.spinner.stopAnimating()
-            strongSelf.retry.isHidden = true
-            
-        }, failure: { [weak self] in
-            Logger.debug(LOGGER_TAG, "Failed to download image")
-            guard let strongSelf = self else {
-                return
-            }
-            
-            strongSelf.retry.isHidden = false
-            strongSelf.spinner.stopAnimating()
-        })
-    */
-        
     }
     
     func downloadCompleted(position: Int) {
