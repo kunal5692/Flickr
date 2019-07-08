@@ -11,6 +11,7 @@ import UIKit
 
 protocol ImageDownloadedDelegate {
     func downloadCompleted(position: Int)
+    func downloadingFailed(position: Int, error : Error)
 }
 
 class CacheManager {
@@ -68,28 +69,18 @@ class ImageDownloadTask {
     private func downloadTaskCompletionHandler(url: URL?, response: URLResponse?, error: Error?) {
         if let error = error {
             print("Error downloading: ", error)
+            self.isDownloading = false
+            self.delegate.downloadingFailed(position: self.position, error: error)
             return
         }
         
         guard let url = url else { return }
-        
-        if let imageFromCache = CacheManager.shared.imageCache.object(forKey: url.absoluteString as AnyObject) as? UIImage {
-            DispatchQueue.main.async {
-                self.image = imageFromCache
-                self.delegate.downloadCompleted(position: self.position)
-            }
-            return
-        }
-        
         guard let data = FileManager.default.contents(atPath: url.path) else { return }
         guard let image = UIImage(data: data) else { return }
         
-        DispatchQueue.main.async {
-            CacheManager.shared.imageCache.setObject(image, forKey: url.absoluteString as AnyObject)
-            self.image = image
-            self.delegate.downloadCompleted(position: self.position)
-        }
-        
+        CacheManager.shared.imageCache.setObject(image, forKey: url.absoluteString as AnyObject)
+        self.image = image
         self.isFinishedDownloading = true
+        self.delegate.downloadCompleted(position: self.position)
     }
 }

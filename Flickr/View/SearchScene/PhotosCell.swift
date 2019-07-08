@@ -45,6 +45,8 @@ class PhotosCell: UICollectionViewCell, ImageDownloadedDelegate {
             
             // Reset image for reused cell
             self.imageView.image = nil
+            
+            self.retry.isHidden = true
             self.spinner.startAnimating()
             //self.loadImage()
         }
@@ -59,7 +61,9 @@ class PhotosCell: UICollectionViewCell, ImageDownloadedDelegate {
     }
     
     @objc func retryPressed() {
-        self.loadImage()
+        self.retry.isHidden = true
+        self.spinner.startAnimating()
+        self.photoCellViewModel?.imageTask?.resume()
     }
     
     func setupConstraints() {
@@ -136,8 +140,21 @@ class PhotosCell: UICollectionViewCell, ImageDownloadedDelegate {
     func downloadCompleted(position: Int) {
         Logger.debug(LOGGER_TAG, "Downloaded image at \(position)")
         if(indexPath?.row == position) {
-            self.spinner.stopAnimating()
-            self.imageView.image = self.photoCellViewModel?.imageTask?.image
+            DispatchQueue.main.async {
+                self.spinner.stopAnimating()
+                self.retry.isHidden = true
+                self.imageView.image = self.photoCellViewModel?.imageTask?.image
+            }
+        }
+    }
+    
+    func downloadingFailed(position: Int, error: Error) {
+        Logger.debug(LOGGER_TAG, "Failed downloading at \(position)")
+        if(indexPath?.row == position) {
+            DispatchQueue.main.async {
+                self.spinner.stopAnimating()
+                self.retry.isHidden = false
+            }
         }
     }
 }
