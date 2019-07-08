@@ -41,8 +41,18 @@ class ImageDownloadTask {
         self.session = session
         self.delegate = delegate
     }
-
+    
     func resume() {
+        if let imageFromCache = CacheManager.shared.imageCache.object(forKey: self.url.absoluteString as AnyObject) as? UIImage {
+            Logger.debug("TASK", "Got from cache")
+            DispatchQueue.main.async {
+                Logger.debug("TASK", "Returing from cache")
+                self.image = imageFromCache
+                self.delegate.downloadCompleted(position: self.position)
+            }
+            return
+        }
+        
         if !isDownloading && !isFinishedDownloading {
             self.isDownloading = true
             
