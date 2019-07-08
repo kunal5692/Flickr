@@ -28,6 +28,10 @@ extension DetailImageViewRoute where Self: UIViewController {
 extension ErrorAlertViewRoute where Self: UIViewController {
     func openAlertView(message: String, title: String) {
         let alertView = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
+            
+        }
+        alertView.addAction(okAction)
         present(alertView, animated: true, completion: nil)
     }
 }

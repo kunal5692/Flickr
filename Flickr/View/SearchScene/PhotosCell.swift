@@ -10,15 +10,11 @@ import UIKit
 
 fileprivate let LOGGER_TAG = "##PhotosCell##"
 
-class PhotosCell: UICollectionViewCell {
+class PhotosCell: UICollectionViewCell, ImageDownloadedDelegate {
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var containerView: UIView!
-    
-    private var secret : String?
-    private var farm : String?
-    private var id : String?
-    private var server : String?
+    var indexPath: IndexPath?
     
     private lazy var spinner : UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView(style: .gray)
@@ -39,12 +35,14 @@ class PhotosCell: UICollectionViewCell {
     
     var photoCellViewModel : PhotosCellViewModel? {
         didSet{
-            secret = photoCellViewModel?.secret
-            farm = photoCellViewModel?.farm
-            id = photoCellViewModel?.id
-            server = photoCellViewModel?.server
+            // Set image task
+            photoCellViewModel?.setImageDownloadTask(position: indexPath?.row ?? 0 , delegate: self)
+            // Reset image for reused cell
+            self.imageView.image = nil
+            // Hide retry button
+            self.retry.isHidden = true
+            // Start animating spinner
             self.spinner.startAnimating()
-            self.loadImage()
         }
     }
     
@@ -57,7 +55,9 @@ class PhotosCell: UICollectionViewCell {
     }
     
     @objc func retryPressed() {
-        self.loadImage()
+        self.retry.isHidden = true
+        self.spinner.startAnimating()
+        self.photoCellViewModel?.imageTask?.resume()
     }
     
     func setupConstraints() {
@@ -102,30 +102,24 @@ class PhotosCell: UICollectionViewCell {
 
     }
     
-    func loadImage() {
-        self.retry.isHidden = true
-        
-        guard let url = URLBuilder.getImageFarmURL(farm: farm!, id: id!, secret: secret!, server: server!) else {
-            return
+    func downloadCompleted(position: Int) {
+        Logger.debug(LOGGER_TAG, "Downloaded image at \(position)")
+        if(indexPath?.row == position) {
+            DispatchQueue.main.async {
+                self.spinner.stopAnimating()
+                self.retry.isHidden = true
+                self.imageView.image = self.photoCellViewModel?.imageTask?.image
+            }
         }
-        
-        Logger.debug(LOGGER_TAG, "Loading image for url \(url.absoluteString)")
-        self.imageView.downloadAndCacheImage(url: url, completion: { [weak self] in
-            Logger.debug(LOGGER_TAG, "Downloaded image")
-            guard let strongSelf = self else {
-                return
+    }
+    
+    func downloadingFailed(position: Int, error: Error) {
+        Logger.debug(LOGGER_TAG, "Failed downloading at \(position)")
+        if(indexPath?.row == position) {
+            DispatchQueue.main.async {
+                self.spinner.stopAnimating()
+                self.retry.isHidden = false
             }
-            strongSelf.spinner.stopAnimating()
-            strongSelf.retry.isHidden = true
-            
-        }, failure: { [weak self] in
-            Logger.debug(LOGGER_TAG, "Failed to download image")
-            guard let strongSelf = self else {
-                return
-            }
-            
-            strongSelf.retry.isHidden = false
-            strongSelf.spinner.stopAnimating()
-        })
+        }
     }
 }

@@ -55,9 +55,9 @@ class URLBuilder {
         return components.url
     }
     
-    static func getImageFarmURL(farm : String, id : String, secret : String, server : String) -> URL? {
+    static func getImageFarmURL(farm : String, id : String, secret : String, server : String, size: String = "m") -> URL? {
         let host = "farm" + farm + "." + Constants.IMAGE_FARM_HOST
-        let path = "/" + server + "/" + id + "_" + secret
+        let path = "/" + server + "/" + id + "_" + secret + "_" + size
         return URL(string: "http://\(host)\(path).jpg")
     }
 }

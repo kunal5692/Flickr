@@ -52,7 +52,11 @@ class SearchViewController: UIViewController, DetailImageViewRoute, ErrorAlertVi
 
 extension SearchViewController : SearchViewModelDelegate {
     func errorWhileFetchingPhotos(error: NSError) {
-        openAlertView(message: error.debugDescription, title: "Error")
+        if(error.code == -1009) {
+            openAlertView(message: "Please connect to internet", title: "No connection")
+        }else {
+            openAlertView(message: error.debugDescription, title: "Error")
+        }
     }
     
     func reloadCollectionView() {
@@ -67,6 +71,12 @@ extension SearchViewController : SearchViewModelDelegate {
     
     func didSelectContact(photo: Photo) {
         openDetailImageView(for: photo)
+    }
+    
+    func reloadItemAtIndexPaths(indexPaths: [IndexPath]) {
+        DispatchQueue.main.async {
+            self.collectionView.insertItems(at: indexPaths)
+        }
     }
 }
 
@@ -127,6 +137,28 @@ extension SearchViewController : UICollectionViewDataSource, UICollectionViewDel
         return vm.getPhotosCount()
     }
     
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        guard let searchVM = self.searchViewModel else {
+            return
+        }
+        
+        guard let cellVM = searchVM.getCellViewModel(at: indexPath) else {
+            return
+        }
+        cellVM.imageTask?.resume()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        guard let searchVM = self.searchViewModel else {
+            return
+        }
+        
+        guard let cellVM = searchVM.getCellViewModel(at: indexPath) else {
+            return
+        }
+        cellVM.imageTask?.pause()
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.PHOTO_CELL_IDENTIFIER, for: indexPath) as? PhotosCell else {
             fatalError("Cell does not exist")
@@ -137,6 +169,7 @@ extension SearchViewController : UICollectionViewDataSource, UICollectionViewDel
         }
         
         let cellVM = searchVM.getCellViewModel(at: indexPath)
+        cell.indexPath = indexPath
         cell.photoCellViewModel = cellVM
         return cell
     }
