@@ -9,6 +9,8 @@
 import Foundation
 import UIKit
 
+fileprivate let TAG = "##TASK##"
+
 protocol ImageDownloadedDelegate {
     func downloadCompleted(position: Int)
     func downloadingFailed(position: Int, error : Error)
@@ -43,6 +45,7 @@ class ImageDownloadTask {
     }
     
     func resume() {
+        Logger.debug(TAG, "Starting download")
         if let imageFromCache = CacheManager.shared.imageCache.object(forKey: self.url.absoluteString as AnyObject) as? UIImage {
             Logger.debug("TASK", "Got from cache")
             DispatchQueue.main.async {
@@ -57,8 +60,10 @@ class ImageDownloadTask {
             self.isDownloading = true
             
             if let resumeData = resumeData {
+                Logger.debug(TAG, "Resuming download")
                 task = session.downloadTask(withResumeData: resumeData, completionHandler: downloadTaskCompletionHandler)
             } else {
+                Logger.debug(TAG, "Downloading from url \(url)")
                 task = session.downloadTask(with: url, completionHandler: downloadTaskCompletionHandler)
             }
             
@@ -88,7 +93,7 @@ class ImageDownloadTask {
         guard let data = FileManager.default.contents(atPath: url.path) else { return }
         guard let image = UIImage(data: data) else { return }
         
-        CacheManager.shared.imageCache.setObject(image, forKey: url.absoluteString as AnyObject)
+        CacheManager.shared.imageCache.setObject(image, forKey: self.url.absoluteString as AnyObject)
         self.image = image
         self.isFinishedDownloading = true
         self.delegate.downloadCompleted(position: self.position)
