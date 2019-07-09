@@ -14,7 +14,7 @@ protocol DetailImageViewRoute {
 }
 
 protocol ErrorAlertViewRoute {
-    func openAlertView(message: String, title: String)
+    func openAlertView(error: NSError)
 }
 
 extension DetailImageViewRoute where Self: UIViewController {
@@ -26,7 +26,31 @@ extension DetailImageViewRoute where Self: UIViewController {
 }
 
 extension ErrorAlertViewRoute where Self: UIViewController {
-    func openAlertView(message: String, title: String) {
+    func openAlertView(error : NSError) {
+        var title = "Error"
+        var message = "Error"
+        
+        switch error.code {
+        case -1009:
+            title = "No connection"
+            message = "Please connect to internet"
+            break
+    
+        case FlickrApiErrCode.NoSearchResultsFound.rawValue:
+            title = "Result Not Found"
+            message = "Sorry we could not find any results for your search query"
+            break
+            
+        case FlickrApiErrCode.GenericError.rawValue:
+            title = error.userInfo["title"] as! String
+            message = error.userInfo["message"] as! String
+            break
+            
+        default:
+            message = error.debugDescription
+            break
+        }
+        
         let alertView = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
             

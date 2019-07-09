@@ -121,6 +121,7 @@ class PhotosListViewModel : SearchViewModelInterface {
                 return
             }
             strongSelf.isFetching = false
+            if(error.code == FlickrApiErrCode.NoSearchResultsFound.rawValue && strongSelf.photos.count > 0) { return }
             strongSelf.delegate?.errorWhileFetchingPhotos(error: error)
         }
     }

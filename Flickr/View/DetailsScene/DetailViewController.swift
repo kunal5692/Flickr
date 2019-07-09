@@ -59,7 +59,8 @@ class DetailViewController: UIViewController, ErrorAlertViewRoute {
             self?.loader.stopAnimating()
         }) { [weak self] in
             self?.loader.stopAnimating()
-            self?.openAlertView(message: "Failed to load image. Please check connection", title: "Loading Failed")
+            let error = NSError(domain: ErrorDomain, code: FlickrApiErrCode.GenericError.rawValue , userInfo: ["title" : "Loading Failed", "message" : "Failed to load image. Please check connection"])
+            self?.openAlertView(error: error)
         }
     }
     
