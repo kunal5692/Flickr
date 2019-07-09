@@ -52,10 +52,8 @@ class SearchViewController: UIViewController, DetailImageViewRoute, ErrorAlertVi
 
 extension SearchViewController : SearchViewModelDelegate {
     func errorWhileFetchingPhotos(error: NSError) {
-        if(error.code == -1009) {
-            openAlertView(message: "Please connect to internet", title: "No connection")
-        }else {
-            openAlertView(message: error.debugDescription, title: "Error")
+        DispatchQueue.main.async {
+            self.openAlertView(error: error)
         }
     }
     

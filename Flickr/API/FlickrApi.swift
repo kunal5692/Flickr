@@ -10,17 +10,17 @@ import Foundation
 import UIKit
 
 fileprivate let LOGGER_TAG = "##FlickrApi##"
-fileprivate let ErrorDomain = "FlickrApi.error"
+public let ErrorDomain = "FlickrApi.error"
 public typealias ErrorHandler = (NSError) -> Void
 
 // MARK: Request error code
 public enum FlickrApiErrCode : Int {
-    case NetworkNotReachable
     case GenericError
     case InvalidResponse
     case UnsupportedStatusCode
     case FailedToDecodeResponse
     case URLBuilderFailure
+    case NoSearchResultsFound
 }
 
 protocol FlickrApiInterface {
@@ -93,6 +93,9 @@ class FlickrApi: FlickrApiInterface {
             do {
                  let result = try decoder.decode(SearchResult.self, from: data)
                  resultsToReturn = result.photos.photo
+                if resultsToReturn.count == 0 {
+                    reqErr = NSError(domain: ErrorDomain, code: FlickrApiErrCode.NoSearchResultsFound.rawValue, userInfo: nil)
+                }
             }catch {
                 Logger.debug(LOGGER_TAG, "[API] Decoding failed with error: \(error)")
                 reqErr = NSError(domain: ErrorDomain, code: FlickrApiErrCode.FailedToDecodeResponse.rawValue, userInfo: nil)
