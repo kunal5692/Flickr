@@ -33,7 +33,6 @@ class ImageDownloadTask {
     
     private var task: URLSessionDownloadTask?
     private var resumeData: Data?
-    
     private var isDownloading: Bool = false
     private var isFinishedDownloading : Bool = false
     
